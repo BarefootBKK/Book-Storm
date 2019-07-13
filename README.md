@@ -1,6 +1,6 @@
 # Book Storm - 基于大数据的图书推荐系统
   
-  **本项目采取【前后端分离】的模式，前端基于npm-vue,后端基于SSM + Spring Security + MySQL**
+  **本项目采取【前后端分离】的模式，前端基于npm-vue，后端基于SSM + Spring Security + MySQL**
   
 <img src="https://img-blog.csdnimg.cn/20190714001106538.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0hCS19NeVN1bW1lckNU,size_16,color_FFFFFF,t_70" width="700px"/>
   
