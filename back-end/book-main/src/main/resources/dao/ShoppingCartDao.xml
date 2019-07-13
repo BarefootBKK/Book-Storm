@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.book.dao.ShoppingCartDao">
+    <resultMap id="listWithBookInfoMap" type="com.book.dto.ShoppingCartResponse"
+               extends="com.book.mapper.ShoppingCartMapper.BaseResultMap">
+        <association property="bookInfo" resultMap="com.book.mapper.BookInfoMapper.BaseResultMap" />
+    </resultMap>
+    <select id="listWithBookInfo" resultMap="listWithBookInfoMap">
+        select
+            sc.*,
+            b.*
+        from book_info b, user u, shopping_cart sc
+        where
+            u.username = ${username}
+        AND
+            u.username = sc.username
+        AND
+            b.id = sc.book_id
+    </select>
+</mapper>

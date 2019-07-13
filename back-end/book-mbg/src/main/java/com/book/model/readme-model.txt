@@ -1,0 +1,1 @@
+存放mybatis自动生成的model类，类似于entity的功能

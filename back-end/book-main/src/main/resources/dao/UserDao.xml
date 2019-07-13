@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.book.dao.UserDao">
+    <resultMap id="getUserDetailInfoMap" type="com.book.dto.UserInfoResponse"
+               extends="com.book.mapper.UserMapper.BaseResultMap">
+        <collection property="addressList" resultMap="com.book.mapper.AddressMapper.BaseResultMap" columnPrefix="a_"></collection>
+    </resultMap>
+    <select id="getUserDetailInfoByUsername" resultMap="getUserDetailInfoMap">
+        SELECT
+            u.*,
+            a.id a_id,
+            a.user_id a_user_id,
+            a.province a_province,
+            a.city a_city,
+            a.district a_district,
+            a.zip_code a_zip,
+            a.address a_address,
+            a.name a_name,
+            a.phone a_phone
+        FROM user u LEFT JOIN address a ON u.id = a.user_id
+        WHERE
+            u.username = ${username}
+    </select>
+    <select id="getUserDetailInfoById" resultMap="getUserDetailInfoMap">
+        SELECT
+            u.*,
+            a.id a_id,
+            a.user_id a_user_id,
+            a.province a_province,
+            a.city a_city,
+            a.district a_district,
+            a.zip_code a_zip,
+            a.address a_address,
+            a.name a_name,
+            a.phone a_phone
+        FROM user u LEFT JOIN address a ON u.id = a.user_id
+        WHERE
+            u.id = ${userId}
+    </select>
+</mapper>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.book.dao.OrderDetailDao">
+    <select id="getOrderDetailByOrderId" resultMap="com.book.mapper.OrderDetailMapper.BaseResultMap">
+        SELECT
+            od.*
+        FROM
+            order_detail od
+        WHERE
+            od.order_id = ${orderId}
+    </select>
+    <select id="getOrderDetailByStoreId" resultMap="com.book.mapper.OrderDetailMapper.BaseResultMap">
+        SELECT
+            od.*
+        FROM
+            order_detail od
+        WHERE
+            od.store_id = ${storeId}
+    </select>
+    <select id="updateOrderDetail">
+        UPDATE
+            order_detail
+        SET
+            post_status = ${postStatus}
+        WHERE
+            order_id = ${orderId}
+        AND
+            book_id = ${bookId}
+    </select>
+</mapper>

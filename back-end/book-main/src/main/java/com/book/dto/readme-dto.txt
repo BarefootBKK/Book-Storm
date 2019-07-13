@@ -1,0 +1,3 @@
+包：dto
+功能：存放系统的参数/回复/数据库数据接收的类
+如UserLoginParam用于用户登录时验证用户request必须参数：username和password是否为空

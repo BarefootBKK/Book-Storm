@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.book.dao.UserRoleDao">
+    <insert id="insertList">
+        INSERT INTO user_role (user_id, role_id) VALUES
+        <foreach collection="list" separator="," item="item" index="index">
+            (#{item.userId,jdbcType=BIGINT},
+            #{item.roleId,jdbcType=BIGINT})
+        </foreach>
+    </insert>
+    <select id="getRoleList" resultMap="com.book.mapper.RoleMapper.BaseResultMap">
+        select
+            r.*
+        from user_role sr, role r, user u
+        where
+            sr.role_id = r.id
+        AND
+            sr.user_id = u.id
+        AND
+            u.username = ${username}
+    </select>
+    <select id="getRoleListByUserId" resultMap="com.book.mapper.RoleMapper.BaseResultMap">
+        select
+            r.*
+        from user_role sr, role r
+        where
+            sr.role_id = r.id
+        AND
+            sr.user_id = ${userId}
+    </select>
+    <select id="getRolePrivilegeList" resultMap="com.book.mapper.PrivilegeMapper.BaseResultMap">
+        SELECT
+            p.*
+        FROM
+            role_privilege rp, privilege p
+        WHERE
+            rp.privilege_id = p.id
+        AND
+            rp.role_id = ${roleId}
+    </select>
+    <select id="getPrivilegeList" resultMap="com.book.mapper.PrivilegeMapper.BaseResultMap">
+        SELECT
+            p.*
+        FROM
+            user_role ur, role_privilege rp, privilege p
+        WHERE
+            ur.role_id = rp.role_id
+        AND
+            rp.privilege_id = p.id
+        AND
+            ur.user_id = ${userId}
+    </select>
+</mapper>

@@ -1,0 +1,637 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.book.mapper.BookInfoMapper">
+  <resultMap id="BaseResultMap" type="com.book.model.BookInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="book_category_id" jdbcType="INTEGER" property="bookCategoryId" />
+    <result column="store_id" jdbcType="INTEGER" property="storeId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="outline" jdbcType="VARCHAR" property="outline" />
+    <result column="detail" jdbcType="VARCHAR" property="detail" />
+    <result column="press" jdbcType="VARCHAR" property="press" />
+    <result column="author" jdbcType="VARCHAR" property="author" />
+    <result column="publish_date" jdbcType="VARCHAR" property="publishDate" />
+    <result column="size" jdbcType="VARCHAR" property="size" />
+    <result column="version" jdbcType="VARCHAR" property="version" />
+    <result column="translator" jdbcType="VARCHAR" property="translator" />
+    <result column="isbn" jdbcType="VARCHAR" property="isbn" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="pages" jdbcType="INTEGER" property="pages" />
+    <result column="catalog" jdbcType="VARCHAR" property="catalog" />
+    <result column="market_price" jdbcType="DECIMAL" property="marketPrice" />
+    <result column="member_price" jdbcType="DECIMAL" property="memberPrice" />
+    <result column="deal_mount" jdbcType="INTEGER" property="dealMount" />
+    <result column="look_mount" jdbcType="INTEGER" property="lookMount" />
+    <result column="discount" jdbcType="DECIMAL" property="discount" />
+    <result column="image_url" jdbcType="VARCHAR" property="imageUrl" />
+    <result column="store_mount" jdbcType="INTEGER" property="storeMount" />
+    <result column="store_time" jdbcType="TIMESTAMP" property="storeTime" />
+    <result column="pack_style" jdbcType="VARCHAR" property="packStyle" />
+    <result column="is_shelf" jdbcType="CHAR" property="isShelf" />
+    <result column="cname" jdbcType="VARCHAR" property="cname" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="cata" jdbcType="VARCHAR" property="cata" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="created" jdbcType="TIMESTAMP" property="created" />
+    <result column="updated" jdbcType="TIMESTAMP" property="updated" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, book_category_id, store_id, name, outline, detail, press, author, publish_date, 
+    size, version, translator, isbn, price, pages, catalog, market_price, member_price, 
+    deal_mount, look_mount, discount, image_url, store_mount, store_time, pack_style, 
+    is_shelf, cname, description, cata, content, created, updated
+  </sql>
+  <select id="selectByExample" parameterType="com.book.model.BookInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from book_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from book_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from book_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.book.model.BookInfoExample">
+    delete from book_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.book.model.BookInfo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into book_info (book_category_id, store_id, name, 
+      outline, detail, press, 
+      author, publish_date, size, 
+      version, translator, isbn, 
+      price, pages, catalog, 
+      market_price, member_price, deal_mount, 
+      look_mount, discount, image_url, 
+      store_mount, store_time, pack_style, 
+      is_shelf, cname, description, 
+      cata, content, created, 
+      updated)
+    values (#{bookCategoryId,jdbcType=INTEGER}, #{storeId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{outline,jdbcType=VARCHAR}, #{detail,jdbcType=VARCHAR}, #{press,jdbcType=VARCHAR}, 
+      #{author,jdbcType=VARCHAR}, #{publishDate,jdbcType=VARCHAR}, #{size,jdbcType=VARCHAR}, 
+      #{version,jdbcType=VARCHAR}, #{translator,jdbcType=VARCHAR}, #{isbn,jdbcType=VARCHAR}, 
+      #{price,jdbcType=DECIMAL}, #{pages,jdbcType=INTEGER}, #{catalog,jdbcType=VARCHAR}, 
+      #{marketPrice,jdbcType=DECIMAL}, #{memberPrice,jdbcType=DECIMAL}, #{dealMount,jdbcType=INTEGER}, 
+      #{lookMount,jdbcType=INTEGER}, #{discount,jdbcType=DECIMAL}, #{imageUrl,jdbcType=VARCHAR}, 
+      #{storeMount,jdbcType=INTEGER}, #{storeTime,jdbcType=TIMESTAMP}, #{packStyle,jdbcType=VARCHAR}, 
+      #{isShelf,jdbcType=CHAR}, #{cname,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{cata,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, 
+      #{updated,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.book.model.BookInfo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into book_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="bookCategoryId != null">
+        book_category_id,
+      </if>
+      <if test="storeId != null">
+        store_id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="outline != null">
+        outline,
+      </if>
+      <if test="detail != null">
+        detail,
+      </if>
+      <if test="press != null">
+        press,
+      </if>
+      <if test="author != null">
+        author,
+      </if>
+      <if test="publishDate != null">
+        publish_date,
+      </if>
+      <if test="size != null">
+        size,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+      <if test="translator != null">
+        translator,
+      </if>
+      <if test="isbn != null">
+        isbn,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="pages != null">
+        pages,
+      </if>
+      <if test="catalog != null">
+        catalog,
+      </if>
+      <if test="marketPrice != null">
+        market_price,
+      </if>
+      <if test="memberPrice != null">
+        member_price,
+      </if>
+      <if test="dealMount != null">
+        deal_mount,
+      </if>
+      <if test="lookMount != null">
+        look_mount,
+      </if>
+      <if test="discount != null">
+        discount,
+      </if>
+      <if test="imageUrl != null">
+        image_url,
+      </if>
+      <if test="storeMount != null">
+        store_mount,
+      </if>
+      <if test="storeTime != null">
+        store_time,
+      </if>
+      <if test="packStyle != null">
+        pack_style,
+      </if>
+      <if test="isShelf != null">
+        is_shelf,
+      </if>
+      <if test="cname != null">
+        cname,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="cata != null">
+        cata,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="created != null">
+        created,
+      </if>
+      <if test="updated != null">
+        updated,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="bookCategoryId != null">
+        #{bookCategoryId,jdbcType=INTEGER},
+      </if>
+      <if test="storeId != null">
+        #{storeId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="outline != null">
+        #{outline,jdbcType=VARCHAR},
+      </if>
+      <if test="detail != null">
+        #{detail,jdbcType=VARCHAR},
+      </if>
+      <if test="press != null">
+        #{press,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null">
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="publishDate != null">
+        #{publishDate,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null">
+        #{size,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="translator != null">
+        #{translator,jdbcType=VARCHAR},
+      </if>
+      <if test="isbn != null">
+        #{isbn,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="pages != null">
+        #{pages,jdbcType=INTEGER},
+      </if>
+      <if test="catalog != null">
+        #{catalog,jdbcType=VARCHAR},
+      </if>
+      <if test="marketPrice != null">
+        #{marketPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="memberPrice != null">
+        #{memberPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="dealMount != null">
+        #{dealMount,jdbcType=INTEGER},
+      </if>
+      <if test="lookMount != null">
+        #{lookMount,jdbcType=INTEGER},
+      </if>
+      <if test="discount != null">
+        #{discount,jdbcType=DECIMAL},
+      </if>
+      <if test="imageUrl != null">
+        #{imageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="storeMount != null">
+        #{storeMount,jdbcType=INTEGER},
+      </if>
+      <if test="storeTime != null">
+        #{storeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="packStyle != null">
+        #{packStyle,jdbcType=VARCHAR},
+      </if>
+      <if test="isShelf != null">
+        #{isShelf,jdbcType=CHAR},
+      </if>
+      <if test="cname != null">
+        #{cname,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="cata != null">
+        #{cata,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null">
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updated != null">
+        #{updated,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.book.model.BookInfoExample" resultType="java.lang.Long">
+    select count(*) from book_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update book_info
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.bookCategoryId != null">
+        book_category_id = #{record.bookCategoryId,jdbcType=INTEGER},
+      </if>
+      <if test="record.storeId != null">
+        store_id = #{record.storeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.outline != null">
+        outline = #{record.outline,jdbcType=VARCHAR},
+      </if>
+      <if test="record.detail != null">
+        detail = #{record.detail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.press != null">
+        press = #{record.press,jdbcType=VARCHAR},
+      </if>
+      <if test="record.author != null">
+        author = #{record.author,jdbcType=VARCHAR},
+      </if>
+      <if test="record.publishDate != null">
+        publish_date = #{record.publishDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.size != null">
+        size = #{record.size,jdbcType=VARCHAR},
+      </if>
+      <if test="record.version != null">
+        version = #{record.version,jdbcType=VARCHAR},
+      </if>
+      <if test="record.translator != null">
+        translator = #{record.translator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isbn != null">
+        isbn = #{record.isbn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.price != null">
+        price = #{record.price,jdbcType=DECIMAL},
+      </if>
+      <if test="record.pages != null">
+        pages = #{record.pages,jdbcType=INTEGER},
+      </if>
+      <if test="record.catalog != null">
+        catalog = #{record.catalog,jdbcType=VARCHAR},
+      </if>
+      <if test="record.marketPrice != null">
+        market_price = #{record.marketPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.memberPrice != null">
+        member_price = #{record.memberPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.dealMount != null">
+        deal_mount = #{record.dealMount,jdbcType=INTEGER},
+      </if>
+      <if test="record.lookMount != null">
+        look_mount = #{record.lookMount,jdbcType=INTEGER},
+      </if>
+      <if test="record.discount != null">
+        discount = #{record.discount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.imageUrl != null">
+        image_url = #{record.imageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeMount != null">
+        store_mount = #{record.storeMount,jdbcType=INTEGER},
+      </if>
+      <if test="record.storeTime != null">
+        store_time = #{record.storeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.packStyle != null">
+        pack_style = #{record.packStyle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isShelf != null">
+        is_shelf = #{record.isShelf,jdbcType=CHAR},
+      </if>
+      <if test="record.cname != null">
+        cname = #{record.cname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null">
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cata != null">
+        cata = #{record.cata,jdbcType=VARCHAR},
+      </if>
+      <if test="record.content != null">
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.created != null">
+        created = #{record.created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updated != null">
+        updated = #{record.updated,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update book_info
+    set id = #{record.id,jdbcType=BIGINT},
+      book_category_id = #{record.bookCategoryId,jdbcType=INTEGER},
+      store_id = #{record.storeId,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      outline = #{record.outline,jdbcType=VARCHAR},
+      detail = #{record.detail,jdbcType=VARCHAR},
+      press = #{record.press,jdbcType=VARCHAR},
+      author = #{record.author,jdbcType=VARCHAR},
+      publish_date = #{record.publishDate,jdbcType=VARCHAR},
+      size = #{record.size,jdbcType=VARCHAR},
+      version = #{record.version,jdbcType=VARCHAR},
+      translator = #{record.translator,jdbcType=VARCHAR},
+      isbn = #{record.isbn,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=DECIMAL},
+      pages = #{record.pages,jdbcType=INTEGER},
+      catalog = #{record.catalog,jdbcType=VARCHAR},
+      market_price = #{record.marketPrice,jdbcType=DECIMAL},
+      member_price = #{record.memberPrice,jdbcType=DECIMAL},
+      deal_mount = #{record.dealMount,jdbcType=INTEGER},
+      look_mount = #{record.lookMount,jdbcType=INTEGER},
+      discount = #{record.discount,jdbcType=DECIMAL},
+      image_url = #{record.imageUrl,jdbcType=VARCHAR},
+      store_mount = #{record.storeMount,jdbcType=INTEGER},
+      store_time = #{record.storeTime,jdbcType=TIMESTAMP},
+      pack_style = #{record.packStyle,jdbcType=VARCHAR},
+      is_shelf = #{record.isShelf,jdbcType=CHAR},
+      cname = #{record.cname,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      cata = #{record.cata,jdbcType=VARCHAR},
+      content = #{record.content,jdbcType=VARCHAR},
+      created = #{record.created,jdbcType=TIMESTAMP},
+      updated = #{record.updated,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.book.model.BookInfo">
+    update book_info
+    <set>
+      <if test="bookCategoryId != null">
+        book_category_id = #{bookCategoryId,jdbcType=INTEGER},
+      </if>
+      <if test="storeId != null">
+        store_id = #{storeId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="outline != null">
+        outline = #{outline,jdbcType=VARCHAR},
+      </if>
+      <if test="detail != null">
+        detail = #{detail,jdbcType=VARCHAR},
+      </if>
+      <if test="press != null">
+        press = #{press,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null">
+        author = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="publishDate != null">
+        publish_date = #{publishDate,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null">
+        size = #{size,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        version = #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="translator != null">
+        translator = #{translator,jdbcType=VARCHAR},
+      </if>
+      <if test="isbn != null">
+        isbn = #{isbn,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="pages != null">
+        pages = #{pages,jdbcType=INTEGER},
+      </if>
+      <if test="catalog != null">
+        catalog = #{catalog,jdbcType=VARCHAR},
+      </if>
+      <if test="marketPrice != null">
+        market_price = #{marketPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="memberPrice != null">
+        member_price = #{memberPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="dealMount != null">
+        deal_mount = #{dealMount,jdbcType=INTEGER},
+      </if>
+      <if test="lookMount != null">
+        look_mount = #{lookMount,jdbcType=INTEGER},
+      </if>
+      <if test="discount != null">
+        discount = #{discount,jdbcType=DECIMAL},
+      </if>
+      <if test="imageUrl != null">
+        image_url = #{imageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="storeMount != null">
+        store_mount = #{storeMount,jdbcType=INTEGER},
+      </if>
+      <if test="storeTime != null">
+        store_time = #{storeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="packStyle != null">
+        pack_style = #{packStyle,jdbcType=VARCHAR},
+      </if>
+      <if test="isShelf != null">
+        is_shelf = #{isShelf,jdbcType=CHAR},
+      </if>
+      <if test="cname != null">
+        cname = #{cname,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="cata != null">
+        cata = #{cata,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null">
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updated != null">
+        updated = #{updated,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.book.model.BookInfo">
+    update book_info
+    set book_category_id = #{bookCategoryId,jdbcType=INTEGER},
+      store_id = #{storeId,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      outline = #{outline,jdbcType=VARCHAR},
+      detail = #{detail,jdbcType=VARCHAR},
+      press = #{press,jdbcType=VARCHAR},
+      author = #{author,jdbcType=VARCHAR},
+      publish_date = #{publishDate,jdbcType=VARCHAR},
+      size = #{size,jdbcType=VARCHAR},
+      version = #{version,jdbcType=VARCHAR},
+      translator = #{translator,jdbcType=VARCHAR},
+      isbn = #{isbn,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      pages = #{pages,jdbcType=INTEGER},
+      catalog = #{catalog,jdbcType=VARCHAR},
+      market_price = #{marketPrice,jdbcType=DECIMAL},
+      member_price = #{memberPrice,jdbcType=DECIMAL},
+      deal_mount = #{dealMount,jdbcType=INTEGER},
+      look_mount = #{lookMount,jdbcType=INTEGER},
+      discount = #{discount,jdbcType=DECIMAL},
+      image_url = #{imageUrl,jdbcType=VARCHAR},
+      store_mount = #{storeMount,jdbcType=INTEGER},
+      store_time = #{storeTime,jdbcType=TIMESTAMP},
+      pack_style = #{packStyle,jdbcType=VARCHAR},
+      is_shelf = #{isShelf,jdbcType=CHAR},
+      cname = #{cname,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      cata = #{cata,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      created = #{created,jdbcType=TIMESTAMP},
+      updated = #{updated,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

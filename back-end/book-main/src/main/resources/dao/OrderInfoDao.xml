@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.book.dao.OrderInfoDao">
+    <select id="getOrderInfoListByUsername" resultMap="com.book.mapper.OrderInfoMapper.BaseResultMap">
+        SELECT
+            oi.*
+        FROM
+            user u, order_info oi
+        WHERE
+            u.id = oi.user_id
+        AND
+            u.username = ${username}
+    </select>
+</mapper>

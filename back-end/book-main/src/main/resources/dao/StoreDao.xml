@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.book.dao.StoreDao">
+    <select id="getStoreByBookId" resultMap="com.book.mapper.StoreMapper.BaseResultMap">
+        select s.*
+        from store s left join book_info b on b.store_id = s.id
+        where b.id = ${bookId}
+    </select>
+    <select id="getStoreByUsername" resultMap="com.book.mapper.StoreMapper.BaseResultMap">
+        select s.*
+        from store s left join user u on s.store_manager_id = u.id
+        where u.username = ${username}
+    </select>
+</mapper>

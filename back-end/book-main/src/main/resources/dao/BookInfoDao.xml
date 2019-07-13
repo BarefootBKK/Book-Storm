@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.book.dao.BookInfoDao">
+    <select id="listByCategory" resultMap="com.book.mapper.BookInfoMapper.BaseResultMap">
+        (select
+            b1.*
+        from
+            book_info b1, book_category c
+        where
+            b1.book_category_id in
+            (select
+                c2.id
+            from
+                book_category c2
+            where
+                c.parent_id = 0 AND c.id = c2.parent_id AND c.name = ${cateName}))
+        UNION
+        (select
+            b2.*
+        from
+            book_info b2, book_category c3
+        where
+            b2.book_category_id = c3.id AND c3.name = ${cateName})
+    </select>
+    <select id="listPopularBooks" resultMap="com.book.mapper.BookInfoMapper.BaseResultMap">
+        SELECT
+            *
+        FROM
+            book_info
+        ORDER BY
+            deal_mount DESC, look_mount DESC
+    </select>
+    <select id="listLatestBooks" resultMap="com.book.mapper.BookInfoMapper.BaseResultMap">
+        SELECT
+            *
+        FROM
+            book_info
+        ORDER BY
+            created DESC
+    </select>
+    <select id="updateBookLookMount">
+        UPDATE
+            book_info
+        SET
+            look_mount = look_mount + 1
+        WHERE
+            id = ${bookId}
+    </select>
+    <select id="updateBookDealMount">
+        UPDATE
+            book_info
+        SET
+            deal_mount = deal_mount + ${dealMount}
+        WHERE
+            id = ${bookId}
+    </select>
+    <select id="updateBookStoreMount">
+        UPDATE
+            book_info
+        SET
+            store_mount = store_mount - 1
+        WHERE
+            id = ${bookId}
+    </select>
+    <select id="queryBookInfoLike" resultMap="com.book.mapper.BookInfoMapper.BaseResultMap">
+        SELECT
+            *
+        FROM
+            `book_info`
+        WHERE
+            `name` like CONCAT(CONCAT('%', #{keyword}), '%')
+        OR
+            `author` like CONCAT(CONCAT('%', #{keyword}), '%')
+    </select>
+</mapper>

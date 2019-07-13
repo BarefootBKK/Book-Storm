@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.book.mapper.StoreMapper">
+  <resultMap id="BaseResultMap" type="com.book.model.Store">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="store_manager_id" jdbcType="BIGINT" property="storeManagerId" />
+    <result column="store_phone_num" jdbcType="VARCHAR" property="storePhoneNum" />
+    <result column="store_telephone" jdbcType="VARCHAR" property="storeTelephone" />
+    <result column="store_name" jdbcType="VARCHAR" property="storeName" />
+    <result column="created" jdbcType="TIMESTAMP" property="created" />
+    <result column="updated" jdbcType="TIMESTAMP" property="updated" />
+    <result column="store_position" jdbcType="VARCHAR" property="storePosition" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, store_manager_id, store_phone_num, store_telephone, store_name, created, updated, 
+    store_position
+  </sql>
+  <select id="selectByExample" parameterType="com.book.model.StoreExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from store
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from store
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from store
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.book.model.StoreExample">
+    delete from store
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.book.model.Store">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into store (store_manager_id, store_phone_num, store_telephone, 
+      store_name, created, updated, 
+      store_position)
+    values (#{storeManagerId,jdbcType=BIGINT}, #{storePhoneNum,jdbcType=VARCHAR}, #{storeTelephone,jdbcType=VARCHAR}, 
+      #{storeName,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}, 
+      #{storePosition,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.book.model.Store">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into store
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="storeManagerId != null">
+        store_manager_id,
+      </if>
+      <if test="storePhoneNum != null">
+        store_phone_num,
+      </if>
+      <if test="storeTelephone != null">
+        store_telephone,
+      </if>
+      <if test="storeName != null">
+        store_name,
+      </if>
+      <if test="created != null">
+        created,
+      </if>
+      <if test="updated != null">
+        updated,
+      </if>
+      <if test="storePosition != null">
+        store_position,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="storeManagerId != null">
+        #{storeManagerId,jdbcType=BIGINT},
+      </if>
+      <if test="storePhoneNum != null">
+        #{storePhoneNum,jdbcType=VARCHAR},
+      </if>
+      <if test="storeTelephone != null">
+        #{storeTelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="storeName != null">
+        #{storeName,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null">
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updated != null">
+        #{updated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="storePosition != null">
+        #{storePosition,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.book.model.StoreExample" resultType="java.lang.Long">
+    select count(*) from store
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update store
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.storeManagerId != null">
+        store_manager_id = #{record.storeManagerId,jdbcType=BIGINT},
+      </if>
+      <if test="record.storePhoneNum != null">
+        store_phone_num = #{record.storePhoneNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeTelephone != null">
+        store_telephone = #{record.storeTelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeName != null">
+        store_name = #{record.storeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.created != null">
+        created = #{record.created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updated != null">
+        updated = #{record.updated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.storePosition != null">
+        store_position = #{record.storePosition,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update store
+    set id = #{record.id,jdbcType=INTEGER},
+      store_manager_id = #{record.storeManagerId,jdbcType=BIGINT},
+      store_phone_num = #{record.storePhoneNum,jdbcType=VARCHAR},
+      store_telephone = #{record.storeTelephone,jdbcType=VARCHAR},
+      store_name = #{record.storeName,jdbcType=VARCHAR},
+      created = #{record.created,jdbcType=TIMESTAMP},
+      updated = #{record.updated,jdbcType=TIMESTAMP},
+      store_position = #{record.storePosition,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.book.model.Store">
+    update store
+    <set>
+      <if test="storeManagerId != null">
+        store_manager_id = #{storeManagerId,jdbcType=BIGINT},
+      </if>
+      <if test="storePhoneNum != null">
+        store_phone_num = #{storePhoneNum,jdbcType=VARCHAR},
+      </if>
+      <if test="storeTelephone != null">
+        store_telephone = #{storeTelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="storeName != null">
+        store_name = #{storeName,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null">
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updated != null">
+        updated = #{updated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="storePosition != null">
+        store_position = #{storePosition,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.book.model.Store">
+    update store
+    set store_manager_id = #{storeManagerId,jdbcType=BIGINT},
+      store_phone_num = #{storePhoneNum,jdbcType=VARCHAR},
+      store_telephone = #{storeTelephone,jdbcType=VARCHAR},
+      store_name = #{storeName,jdbcType=VARCHAR},
+      created = #{created,jdbcType=TIMESTAMP},
+      updated = #{updated,jdbcType=TIMESTAMP},
+      store_position = #{storePosition,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
